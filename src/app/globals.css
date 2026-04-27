@@ -5,22 +5,387 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --font-satoshi: "Satoshi", "sans-serif";
+  --font-integralCF: "IntegralCF", "sans-serif";
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Black.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IntegralCF";
+  src: url("/fonts/Fontspring-DEMO-integralcf-regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IntegralCF";
+  src: url("/fonts/Fontspring-DEMO-integralcf-medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IntegralCF";
+  src: url("/fonts/Fontspring-DEMO-integralcf-demibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IntegralCF";
+  src: url("/fonts/Fontspring-DEMO-integralcf-bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IntegralCF";
+  src: url("/fonts/Fontspring-DEMO-integralcf-extrabold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IntegralCF";
+  src: url("/fonts/Fontspring-DEMO-integralcf-heavy.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@theme {
+  --breakpoint-3xl: 120rem;
+}
+
+@media (hover: hover) {
+  .site_navbar .hamburger_icon svg {
+    display: none;
+  }
+
+  .site_navbar .site_logo .site_logo_svg {
+    margin-left: -2rem;
+  }
+
+  .site_navbar .left_side_nav {
+    display: none;
+  }
+
+  .site_navbar .right_side_nav .search_bar {
+    display: block;
+  }
+
+  .site_navbar .site_logo {
+    position: relative;
+    margin-left: 0;
+    margin-right: 0;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+
+  /* search bar */
+
+  .small_search_bar {
+    display: none;
+  }
+  .search_bar_container {
+    width: 368px !important;
+    margin-inline: 0 !important;
+    top: 4.2rem !important;
+    right: 7.4rem !important;
+  }
+
+  @media (min-width: 1280px) {
+    .search_bar_container {
+      width: 468px !important;
+    }
+  }
+
+  @media (min-width: 1585px) {
+    .search_bar_container {
+      width: 488px !important;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .search_bar_container {
+      width: 988px !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site_navbar .site_logo img {
+      height: 130px;
+      width: 130px;
+    }
+  }
+
+  /* navbar menu list */
+
+  .list_items {
+    display: block !important;
+  }
+
+  /* navbar menu */
+
+  .navbar_menu {
+    height: 100% !important;
+  }
+
+  /* open state */
+  .search-anim-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* closed state */
+  .search-anim-close {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* carousel styling */
+
+  .content_container {
+    text-align: left !important;
+    align-items: start !important;
+  }
+  /* Category-Tabs */
+
+  .Category-Tabs {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+@media (hover: none) {
+  .search_bar_container {
+    transform: translateX(-100%);
+  }
+
+  .search_bar_container {
+    opacity: 1 !important;
+  }
+}
+/* logo svg fonts */
+
+.brand {
+  font-family: var(--font-playfair), "Didot", serif;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+.tagline {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: 300;
+  letter-spacing: 4px;
+}
+
+/* hero carousel styling start here */
+
+.hero-carousel .swiper-button-next,
+.hero-carousel .swiper-button-prev {
+  width: 48px !important;
+  height: 48px !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(6px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 50% !important;
+  color: #ffffff !important;
+  transition: all 0.3s ease !important;
+}
+.hero-carousel .swiper-button-next:hover,
+.hero-carousel .swiper-button-prev:hover {
+  background: rgba(201, 168, 76, 0.8) !important;
+  border-color: #c9a84c !important;
+}
+.hero-carousel .swiper-button-next::after,
+.hero-carousel .swiper-button-prev::after {
+  font-size: 14px !important;
+  font-weight: bold !important;
+}
+.hero-carousel .swiper-pagination-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease !important;
+}
+.hero-carousel .swiper-pagination-bullet-active {
+  width: 28px !important;
+  height: 8px !important;
+  background: #c9a84c !important;
+  border-radius: 4px !important;
+}
+.hero-carousel .swiper-button-next {
+  right: 16px !important;
+}
+.hero-carousel .swiper-button-prev {
+  left: 16px !important;
+}
+@media (min-width: 768px) {
+  .hero-carousel .swiper-button-next {
+    right: 32px !important;
+  }
+  .hero-carousel .swiper-button-prev {
+    left: 32px !important;
+  }
+  .hero-carousel .swiper-button-next,
+  .hero-carousel .swiper-button-prev {
+    width: 56px !important;
+    height: 56px !important;
+  }
+}
+
+/* hero carousel styling ends here */
+
+/* for-you carousel styling start here  */
+
+.just-for-you .swiper-pagination-bullet {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  opacity: 1 !important;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+}
+
+.just-for-you .swiper-pagination-bullet-active {
+  background: transparent !important;
+}
+
+.just-for-you .swiper-pagination-bullet::before,
+.just-for-you .swiper-pagination-bullet::after {
+  display: none !important;
+  content: none !important;
+}
+
+.just-for-you .swiper-pagination-bullet {
+  background: none !important;
+  opacity: 1 !important;
+  width: 8px;
+  height: 8px;
+}
+
+.just-for-you .dot-active {
+  display: none;
+}
+
+.just-for-you .swiper-pagination-bullet-active .dot-inactive {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .just-for-you .dot-inactive svg {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .just-for-you .dot-active svg {
+    width: 10px !important;
+    height: 10px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .just-for-you .dot-inactive svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .just-for-you .dot-active svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .just-for-you .dot-inactive svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .just-for-you .dot-active svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
+@media (min-width: 1585px) {
+  .just-for-you .dot-inactive svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .just-for-you .dot-active svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+@media (min-width: 2560px) {
+  .just-for-you .dot-inactive svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .just-for-you .dot-active svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+.just-for-you .swiper-pagination-bullet-active .dot-active {
+  display: block;
+}
+/* for-you carousel styling ends here */
+
+/* checking */

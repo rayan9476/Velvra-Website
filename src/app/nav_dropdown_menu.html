@@ -1,0 +1,132 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .nav-wrap { font-family: 'Tenor Sans', serif; max-width: 320px; padding: 1rem 0; }
+  .nav-item { border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .nav-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1.25rem; cursor: pointer; height: 48.5px;
+    font-size: 16px; font-weight: 400; letter-spacing: 0px;
+    color: var(--color-text-primary); user-select: none;
+    transition: color 0.2s;
+  }
+  .nav-row:hover { color: var(--color-text-secondary); }
+  .nav-row svg { flex-shrink: 0; transition: transform 0.25s ease; }
+  .nav-row.open svg { transform: rotate(180deg); }
+  .dropdown {
+    overflow: hidden; max-height: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+  .dropdown.open { max-height: 400px; opacity: 1; }
+  .dropdown-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1.25rem 0 2rem; height: 44px; font-size: 14px;
+    color: var(--color-text-secondary); cursor: pointer;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    transition: color 0.2s;
+  }
+  .dropdown-item:last-child { border-bottom: none; }
+  .dropdown-item:hover { color: var(--color-text-primary); }
+</style>
+
+<div class="nav-wrap">
+  <div class="nav-item" id="item-New">
+    <div class="nav-row" onclick="toggle('New')">
+      <span>New</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 9L12.0368 15.9632L5.07366 9" stroke="currentColor" stroke-opacity="0.5"/></svg>
+    </div>
+    <div class="dropdown" id="drop-New">
+      <div class="dropdown-item">Just In</div>
+      <div class="dropdown-item">Best Sellers</div>
+      <div class="dropdown-item">Sale</div>
+    </div>
+  </div>
+
+  <div class="nav-item" id="item-Apparel">
+    <div class="nav-row" onclick="toggle('Apparel')">
+      <span>Apparel</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 9L12.0368 15.9632L5.07366 9" stroke="currentColor" stroke-opacity="0.5"/></svg>
+    </div>
+    <div class="dropdown" id="drop-Apparel">
+      <div class="dropdown-item">Dress</div>
+      <div class="dropdown-item">Blouse / Shirt</div>
+      <div class="dropdown-item">T-Shirt</div>
+      <div class="dropdown-item">Knitwear</div>
+      <div class="dropdown-item">Skirt</div>
+      <div class="dropdown-item">Pants</div>
+      <div class="dropdown-item">Denim</div>
+      <div class="dropdown-item">Kids</div>
+    </div>
+  </div>
+
+  <div class="nav-item" id="item-Bag">
+    <div class="nav-row" onclick="toggle('Bag')">
+      <span>Bag</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 9L12.0368 15.9632L5.07366 9" stroke="currentColor" stroke-opacity="0.5"/></svg>
+    </div>
+    <div class="dropdown" id="drop-Bag">
+      <div class="dropdown-item">Tote</div>
+      <div class="dropdown-item">Shoulder Bag</div>
+      <div class="dropdown-item">Clutch</div>
+      <div class="dropdown-item">Backpack</div>
+    </div>
+  </div>
+
+  <div class="nav-item" id="item-Shoes">
+    <div class="nav-row" onclick="toggle('Shoes')">
+      <span>Shoes</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 9L12.0368 15.9632L5.07366 9" stroke="currentColor" stroke-opacity="0.5"/></svg>
+    </div>
+    <div class="dropdown" id="drop-Shoes">
+      <div class="dropdown-item">Heels</div>
+      <div class="dropdown-item">Flats</div>
+      <div class="dropdown-item">Sneakers</div>
+      <div class="dropdown-item">Boots</div>
+      <div class="dropdown-item">Sandals</div>
+    </div>
+  </div>
+
+  <div class="nav-item" id="item-Beauty">
+    <div class="nav-row" onclick="toggle('Beauty')">
+      <span>Beauty</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 9L12.0368 15.9632L5.07366 9" stroke="currentColor" stroke-opacity="0.5"/></svg>
+    </div>
+    <div class="dropdown" id="drop-Beauty">
+      <div class="dropdown-item">Skincare</div>
+      <div class="dropdown-item">Fragrance</div>
+      <div class="dropdown-item">Makeup</div>
+    </div>
+  </div>
+
+  <div class="nav-item" id="item-Accessories">
+    <div class="nav-row" onclick="toggle('Accessories')">
+      <span>Accessories</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 9L12.0368 15.9632L5.07366 9" stroke="currentColor" stroke-opacity="0.5"/></svg>
+    </div>
+    <div class="dropdown" id="drop-Accessories">
+      <div class="dropdown-item">Jewellery</div>
+      <div class="dropdown-item">Scarves</div>
+      <div class="dropdown-item">Hats</div>
+      <div class="dropdown-item">Belts</div>
+      <div class="dropdown-item">Sunglasses</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let current = null;
+  function toggle(key) {
+    const row = document.querySelector(`#item-${key} .nav-row`);
+    const drop = document.getElementById(`drop-${key}`);
+    if (current && current !== key) {
+      document.querySelector(`#item-${current} .nav-row`).classList.remove('open');
+      document.getElementById(`drop-${current}`).classList.remove('open');
+    }
+    const isOpen = drop.classList.contains('open');
+    row.classList.toggle('open', !isOpen);
+    drop.classList.toggle('open', !isOpen);
+    current = isOpen ? null : key;
+  }
+</script>

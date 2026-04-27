@@ -1,0 +1,111 @@
+"use client";
+import DividerSVG from "./DividerSVG";
+
+const TwitterIcon = () => (
+  <svg
+    className="md:h-[25px] md:h-[25px] lg:h-[30px] lg:w-[30px] xl:h-[35px] xl:w-[35px] 2xl:h-[40px] 2xl:W-[40px]"
+    width="21"
+    height="17"
+    viewBox="0 0 21 17"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M20.8008 2.0008C20.0352 2.3408 19.2128 2.5696 18.3496 2.6728C19.2312 2.1448 19.9072 1.3088 20.2256 0.312C19.4016 0.8008 18.488 1.156 17.5152 1.348C16.7368 0.5184 15.628 0 14.4008 0C12.044 0 10.1336 1.9112 10.1336 4.2672C10.1336 4.6016 10.172 4.928 10.244 5.2392C6.6976 5.0616 3.5536 3.3624 1.448 0.78C1.0816 1.4104 0.8712 2.1432 0.8712 2.9264C0.8712 4.4064 1.624 5.7128 2.7688 6.4776C2.0696 6.4552 1.4112 6.2632 0.836 5.944C0.836 5.9624 0.836 5.9792 0.836 5.9976C0.836 8.0656 2.3064 9.7904 4.2592 10.1816C3.9016 10.2792 3.524 10.3312 3.1344 10.3312C2.86 10.3312 2.592 10.304 2.332 10.2552C2.8752 11.9504 4.4512 13.1848 6.3184 13.2192C4.8584 14.364 3.0184 15.0464 1.0184 15.0464C0.6744 15.0464 0.3344 15.0264 0 14.9864C1.8888 16.1968 4.1312 16.9032 6.5416 16.9032C14.3912 16.9032 18.6824 10.4008 18.6824 4.7616C18.6824 4.5768 18.6784 4.3928 18.6704 4.2096C19.5048 3.6072 20.2288 2.856 20.8008 2.0008Z"
+      fill="#333333"
+    />
+  </svg>
+);
+
+const InstagramIcon = () => (
+  <svg
+    className="md:h-[25px] md:h-[25px] lg:h-[30px] lg:w-[30px] xl:h-[35px] xl:w-[35px] 2xl:h-[40px] 2xl:W-[40px]"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M5.59844 0C2.51124 0 0 2.51356 0 5.60156V13.6016C0 16.6888 2.51356 19.2 5.60156 19.2H13.6016C16.6888 19.2 19.2 16.6864 19.2 13.5984V5.59844C19.2 2.51124 16.6864 0 13.5984 0H5.59844ZM15.2 3.2C15.6416 3.2 16 3.5584 16 4C16 4.4416 15.6416 4.8 15.2 4.8C14.7584 4.8 14.4 4.4416 14.4 4C14.4 3.5584 14.7584 3.2 15.2 3.2ZM9.6 4.8C12.2472 4.8 14.4 6.9528 14.4 9.6C14.4 12.2472 12.2472 14.4 9.6 14.4C6.9528 14.4 4.8 12.2472 4.8 9.6C4.8 6.9528 6.9528 4.8 9.6 4.8ZM9.6 6.4C8.75131 6.4 7.93737 6.73714 7.33726 7.33726C6.73714 7.93737 6.4 8.75131 6.4 9.6C6.4 10.4487 6.73714 11.2626 7.33726 11.8627C7.93737 12.4629 8.75131 12.8 9.6 12.8C10.4487 12.8 11.2626 12.4629 11.8627 11.8627C12.4629 11.2626 12.8 10.4487 12.8 9.6C12.8 8.75131 12.4629 7.93737 11.8627 7.33726C11.2626 6.73714 10.4487 6.4 9.6 6.4Z"
+      fill="#333333"
+    />
+  </svg>
+);
+
+const YoutubeIcon = () => (
+  <svg
+    className="md:h-[25px] md:h-[25px] lg:h-[30px] lg:w-[30px] xl:h-[35px] xl:w-[35px] 2xl:h-[40px] 2xl:W-[40px]"
+    width="21"
+    height="18"
+    viewBox="0 0 21 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M10.4 0C7.0512 0 2.70469 0.839063 2.70469 0.839063L2.69375 0.851563C1.16853 1.09549 0 2.4061 0 4V8.8V8.80156V13.6V13.6016C0.00148836 14.3628 0.274296 15.0986 0.769438 15.6767C1.26458 16.2549 1.94962 16.6377 2.70156 16.7563L2.70469 16.7609C2.70469 16.7609 7.0512 17.6016 10.4 17.6016C13.7488 17.6016 18.0953 16.7609 18.0953 16.7609L18.0969 16.7594C18.8496 16.6411 19.5355 16.258 20.031 15.6791C20.5265 15.1003 20.7992 14.3636 20.8 13.6016V13.6V8.80156V8.8V4C20.7989 3.2385 20.5262 2.50236 20.0311 1.92385C19.5359 1.34533 18.8506 0.962362 18.0984 0.84375L18.0953 0.839063C18.0953 0.839063 13.7488 0 10.4 0ZM8 5.11875L14.4 8.8L8 12.4813V5.11875Z"
+      fill="#333333"
+    />
+  </svg>
+);
+
+const Icons = [
+  {
+    icon: <TwitterIcon />,
+  },
+  {
+    icon: <InstagramIcon />,
+  },
+  {
+    icon: <YoutubeIcon />,
+  },
+];
+
+const Links = ["About", "Contact", "Blog"];
+
+export default function Footer() {
+  return (
+    <footer
+      // pb-4
+      className="w-full    mt-4 pt-12  md:pt-14 lg:pt-16 flex flex-col items-center justify-center"
+      role="contentinfo"
+      aria-label="Site footer"
+    >
+      <div
+        className="flex items-center px-2.5 md:px-4 lg:px-5 gap-8 md:gap-12 lg:gap-16 mb-4 md:mb-6 lg:mb-8 xl:mb-9 2xl:mb-10 3xl:mb-11 "
+        aria-label="Social media links"
+      >
+        {Icons.map((f, index) => (
+          <span key={index} aria-hidden="true">
+            {f.icon}
+          </span>
+        ))}
+      </div>
+
+      <DividerSVG className="w-[10rem]  lg:w-[12rem] xl:w-[14rem] 2xl:w-[16rem] 3xl:w-[18rem]" />
+
+      <div className="flex items-center  justify-center w-full gap-8 lg:gap-12 3xl:gap-16  mt-5 mb-5 md:mt-7 md:mb-7 lg:mt-9 lg:mb-9 xl:mt-11 xl:mb-11 2xl:mt-13 2xl:mb-13 3xl:mt-15 3xl:mb-15">
+        {Links.map((link, index) => (
+          <span
+            key={index}
+            aria-hidden="true"
+            className="font-[Tenor_Sans] font-normal text-[#333333] hover:text-gray-500   transition-all duration-300 cursor-pointer text-[18px] md:text-[22px] lg:text-[26px] xl:text-[30px] 2xl:text-[34px] 3xl:text-[38px] tracking-wide"
+          >
+            {link}
+          </span>
+        ))}
+      </div>
+
+      {/* mt-4 md:mt-6 lg:mt-8 xl:mt-10 2xl:mt-12 3xl:mt-14 */}
+      <div className="flex items-center  bg-[#F3F4F6] justify-center w-full mt-4 ">
+        <p
+          className="font-[Tenor_Sans] font-normal text-[#333333] text-[18px] md:text-[22px] lg:text-[26px] xl:text-[30px] tracking-wide py-[0.5rem]"
+          aria-label="Copyright notice"
+        >
+          © 2026 Velvra — Elegance <br className="lg:hidden" /> Refined. All
+          rights reserved.
+        </p>
+      </div>
+    </footer>
+  );
+}

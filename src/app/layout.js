@@ -1,14 +1,25 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Playfair_Display } from "next/font/google";
+import { Tenor_Sans } from "next/font/google";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { Bodoni_Moda } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const playfair = Playfair_Display({
   subsets: ["latin"],
+  weight: "400",
+  variable: "--font-playfair",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const tenor = Tenor_Sans({
   subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-tenor",
+});
+
+const bodoni = Bodoni_Moda({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -18,11 +29,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en">
+      <body className={tenor.className}>
+        <header role="contentinfo" aria-label="Site header">
+          <Navbar />
+        </header>
+        {children}
+
+        <Footer />
+      </body>
     </html>
   );
 }
