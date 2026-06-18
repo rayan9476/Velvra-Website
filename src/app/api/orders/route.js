@@ -152,7 +152,7 @@ export async function POST(request) {
   }
 }
 
-export async function GET() {
+export async function GET(request) {
   try {
     // Check if user is logged in
     const result = await getUserFromToken();
@@ -165,19 +165,47 @@ export async function GET() {
     }
 
     const userId = result.id;
+    console.log("id", userId);
+    const isAdmin = result.role === "admin";
 
-    // get all orders for this user
-    const [orders] = await db.query(
-      `SELECT 
+    const { searchParams } = new URL(request.url);
+    const statusFilter = searchParams.get("status");
+
+    // query
+    let query = `
+        SELECT 
         orders.id,
         orders.total_price,
         orders.status,
         orders.created_at
       FROM orders
-      WHERE orders.user_id = ?
-      ORDER BY orders.created_at DESC`,
-      [userId],
-    );
+      WHERE orders.user_id = ?`;
+
+    const queryParams = [userId];
+
+    // User sends ?status=exclude_cancelled → hide cancelled
+    // Admin sends nothing → sees everything
+    if (statusFilter === "exclude_cancelled" && !isAdmin) {
+      query += ` AND orders.status != 'cancelled'`;
+    }
+
+    query += ` ORDER BY orders.created_at DESC`;
+
+    // get all orders for this user
+
+    const [orders] = await db.query(query, queryParams);
+
+    // const [orders] = await db.query(
+    //   `SELECT
+    //     orders.id,
+    //     orders.total_price,
+    //     orders.status,
+    //     orders.created_at
+    //   FROM orders
+    //   WHERE orders.user_id = ?
+    //   ORDER BY orders.created_at DESC`,
+    //   [userId],
+    // );
 
     // check if user has any orders
     if (orders.length === 0) {

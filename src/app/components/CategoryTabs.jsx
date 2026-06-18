@@ -1,6 +1,6 @@
 "use client";
-
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setActive } from "../redux/features/blogsSlice";
 
 const categories = [
   "Fashion",
@@ -12,11 +12,17 @@ const categories = [
   "Accessories",
 ];
 
-export default function CategoryTabs({ active, setActive }) {
-  //   const [active, setActive] = useState("Fashion");
+export default function CategoryTabs() {
+  const dispatch = useDispatch();
+
+  const active = useSelector((state) => state.blogs.active);
 
   return (
-    <div className="Category-Tabs  w-full overflow-x-auto scrollbar-hide mb-6 md:mb-8 lg:mb-10 xl:mb-12 2xl:mb-16 3xl:mb-20">
+    <div
+      role="tablist"
+      aria-label="Category filters"
+      className="Category-Tabs  w-full overflow-x-auto scrollbar-hide mb-6 md:mb-8 lg:mb-10 xl:mb-12 2xl:mb-16 3xl:mb-20"
+    >
       <div className="flex gap-3 md:gap-4 lg:gap-5 min-w-max px-2 py-2">
         {categories.map((item) => {
           const isActive = active === item;
@@ -24,7 +30,11 @@ export default function CategoryTabs({ active, setActive }) {
           return (
             <button
               key={item}
-              onClick={() => setActive(item)}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-pressed={isActive}
+              onClick={() => dispatch(setActive(item))}
               className={`
                 font-[Tenor_Sans] font-normal
                 whitespace-nowrap

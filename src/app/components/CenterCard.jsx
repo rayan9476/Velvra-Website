@@ -24,7 +24,7 @@ function CenterCard({ image, className }) {
         >
           <button
             className="opacity-0 text-center border-2 border-white group-hover:opacity-100 font-satoshi bg-transparent cursor-pointer  hover:bg-[#EDEDED]   text-[#C9A84C] hover:text-black text-sm sm:text-base xl:text-lg 2xl:text-2xl 3xl:text-3xl font-semibold px-6 sm:px-8 py-3 sm:py-4 3xl:py-6  uppercase transition-all duration-300 "
-            aria-label="Open collection"
+            aria-label="View collection"
             type="button"
           >
             View Collection

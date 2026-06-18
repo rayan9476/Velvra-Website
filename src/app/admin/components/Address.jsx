@@ -1,0 +1,62 @@
+function Address({ adminProfile, setshowProfileAddressEditModel }) {
+  return (
+    <>
+      <div className="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <h4 className="text-lg 3xl:text-2xl font-semibold text-gray-800 dark:text-white/90 lg:mb-6">
+              Address
+            </h4>
+
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
+              <div>
+                <p className="mb-2 text-xs 3xl:text-[16px] text-gray-500 dark:text-gray-400">
+                  Country
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {adminProfile.country}
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs 3xl:text-[16px] text-gray-500 dark:text-gray-400">
+                  City/State
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {adminProfile.state}
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs 3xl:text-[16px] text-gray-500 dark:text-gray-400">
+                  Postal Code
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {adminProfile.postalCode}
+                </p>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs 3xl:text-[16px] text-gray-500 dark:text-gray-400">
+                  TAX ID
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white/90">
+                  {adminProfile.taxId}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setshowProfileAddressEditModel(true)}
+            className="flex cursor-pointer w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm 2xl:text-[16px] 3xl:text-[18px] font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Address;

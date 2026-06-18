@@ -8,13 +8,22 @@ import JustForYou from "./components/JustForYou";
 import TrendingTags from "./components/TrendingTags";
 import VelvraSection from "./components/VelvraSection";
 import FollowUsSection from "./components/FollowUsSection";
+import { Skeleton } from "boneyard-js/react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  }, []);
   return (
     <>
-      <SearchBar />
+      <Skeleton name="home-page" loading={isLoading} error={null}>
+        <SearchBar />
 
-      <main>
         <HeroCarousel />
 
         <NewArrival />
@@ -25,7 +34,7 @@ export default function Home() {
         <TrendingTags />
         <VelvraSection />
         <FollowUsSection />
-      </main>
+      </Skeleton>
     </>
   );
 }

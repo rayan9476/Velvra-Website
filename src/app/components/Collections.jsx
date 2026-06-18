@@ -34,7 +34,7 @@ function Collections() {
         <div
           className="relative  w-full pr-2.5 md:pr-4 lg:pr-5"
           role="region"
-          aria-label="Collection showcase item 1"
+          aria-label={`Collection showcase ${collections[0].title}`}
         >
           <CenterCard
             image={collections[0].image}

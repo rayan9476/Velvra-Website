@@ -4,23 +4,32 @@ import Image from "next/image";
 function Blog({ blogs, active }) {
   const [isWished, setIsWished] = useState({});
 
-  const filtered = blogs.filter((p) => p.category === active);
+  // const filtered = blogs.filter((p) => p.category === active);
+  const filtered = blogs.filter((p) => (p.category === active ? p : blogs));
 
   return (
     <article
       className="grid grid-cols-1 xl:grid-cols-2 gap-3 md:gap-5 lg:gap-6"
-      role="region"
-      aria-label="blog posts grid"
+      aria-label="Blog posts grid"
     >
       {filtered.length > 0 ? (
         filtered.map((blog) => {
           const wished = isWished[blog.id];
 
           return (
-            <div key={blog.id} className="group flex flex-col gap-4">
-              <div className="relative aspect-square overflow-hidden cursor-pointer">
+            <div
+              key={blog.id}
+              aria-label={`Blog post: ${blog.title}`}
+              className="group flex flex-col gap-4"
+            >
+              <div
+                role="button"
+                tabIndex={0}
+                aria-label={`Open blog: ${blog.title}`}
+                className="relative aspect-square overflow-hidden cursor-pointer"
+              >
                 <Image
-                  src={blog.img}
+                  src={blog.image}
                   alt="blog"
                   fill
                   className="w-full h-full object-cover object-top
@@ -37,6 +46,7 @@ function Blog({ blogs, active }) {
                 </div>
 
                 <button
+                  type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsWished((prev) => ({
@@ -77,6 +87,8 @@ function Blog({ blogs, active }) {
                   {blog.tags.map((tag, index) => (
                     <button
                       key={index}
+                      type="button"
+                      aria-label={`Filter by tag ${tag}`}
                       className={`
                 font-[Tenor_Sans] font-normal
                 whitespace-nowrap
@@ -98,7 +110,7 @@ bg-transparent text-gray-500 border border-gray-300
                 </div>
 
                 <span className="text-gray-400 text-[12px] sm:text-[14px]">
-                  {blog.date}
+                  {blog.publish_date}
                 </span>
               </div>
             </div>

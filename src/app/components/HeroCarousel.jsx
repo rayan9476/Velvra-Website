@@ -5,35 +5,75 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Image from "next/image";
+import { useEffect } from "react";
+import { fetchCollections } from "@/app/lib/services";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setSlides,
+  setError,
+  setLoading,
+} from "../redux/features/HeroCarouselSlice";
 
-const slides = [
-  {
-    id: 1,
-    image:
-      "https://images.unsplash.com/photo-1659522761084-79196b64abe4?q=80&w=770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "New Collection",
-    subtitle: "Elegance Redefined.",
-    cta: "Shop Now",
-  },
-  {
-    id: 2,
-    image:
-      "https://images.unsplash.com/photo-1666635228066-b2638dbe6503?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Summer Edit",
-    subtitle: "Luxury in Every Thread.",
-    cta: "Explore Now",
-  },
-  {
-    id: 3,
-    image:
-      "https://images.unsplash.com/photo-1666635213698-0ea75f64e79c?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Exclusive Pieces",
-    subtitle: "Dress Beyond Ordinary.",
-    cta: "Discover More",
-  },
-];
+// const slides = [
+//   {
+//     id: 1,
+//     image:
+//       "https://images.unsplash.com/photo-1659522761084-79196b64abe4?q=80&w=770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+//     title: "New Collection",
+//     subtitle: "Elegance Redefined.",
+//     cta: "Shop Now",
+//   },
+//   {
+//     id: 2,
+//     image:
+//       "https://images.unsplash.com/photo-1666635228066-b2638dbe6503?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+//     title: "Summer Edit",
+//     subtitle: "Luxury in Every Thread.",
+//     cta: "Explore Now",
+//   },
+//   {
+//     id: 3,
+//     image:
+//       "https://images.unsplash.com/photo-1666635213698-0ea75f64e79c?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+//     title: "Exclusive Pieces",
+//     subtitle: "Dress Beyond Ordinary.",
+//     cta: "Discover More",
+//   },
+// ];
 
 export default function HeroCarousel() {
+  const dispatch = useDispatch();
+
+  const { slides, loading, error } = useSelector((state) => state.hero);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        dispatch(setLoading());
+        const collections = await fetchCollections();
+        // Map collections to slides format
+        const mapped = collections.map((c) => ({
+          id: c.id,
+          image: c.hero_image || c.image,
+          title: c.title,
+          subtitle: c.subtitle || "Elegance Redefined.",
+          cta: "Shop Now",
+          collectionId: c.id,
+        }));
+
+        dispatch(setSlides(mapped));
+      } catch (err) {
+        dispatch(
+          setError(err.response?.data?.message || "Something went wrong"),
+        );
+      }
+    };
+    load();
+  }, []);
+
+  if (loading || slides.length === 0) return null;
+  if (error) return <p>some thing went wrong</p>;
+
   return (
     <div
       className="hero-carousel    relative w-full"

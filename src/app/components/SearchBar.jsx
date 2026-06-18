@@ -4,6 +4,11 @@ import useMenuSlideAnimation from "../hooks/useMenuSlideAnimation";
 import useClickOutside from "../hooks/useClickOutside";
 import useMenuAnimation from "../hooks/useMenuAnimation";
 import popularSearches from "../data/PopularSearches";
+import {
+  SearchBarIcon,
+  CloseSearchIcon,
+  RemoveRecentSearchIcon,
+} from "./icons/SearchBarIcons";
 
 export default function SearchBar({
   isSearchOpen,
@@ -46,37 +51,14 @@ export default function SearchBar({
       role="dialog"
       aria-modal="true"
       aria-label="Search panel"
-      className={`search_bar_container  h-screen z-50 overflow-x-hidden pointer-events-none opacity-0  fixed  top-0 z-10 bg-white  w-full  xl:w-[588px] 2xl:w-[788px] 3xl:w-[988px]   mx-auto font-[Tenor_Sans]  px-2.5 md:px-4 lg:px-5  py-4 
+      className={`search_bar_container  h-screen z-50 overflow-x-hidden  opacity-0  fixed inset-0 top-0 left-0 right-0  bg-white  w-full  xl:w-[588px] 2xl:w-[788px] 3xl:w-[988px]   mx-auto font-[Tenor_Sans]  px-2.5 md:px-4 lg:px-5  py-4 
         ${isSearchOpen ? openMenu() : closeMenu()}
      
-     
+     ${isSearchOpen ? "pointer-events-auto " : "pointer-events-none "}
         `}
     >
       <div className="small_search_bar lg:hidden  flex items-center border-b border-[#555555] pb-2">
-        <svg
-          className="search_icon_svg lg:h-[35px] lg:w-[35px] cursor-pointer 
-              transition-all duration-300 ease-in-out
-
-    hover:scale-110
-    hover:stroke-gray-600
-
-    active:scale-95
-              
-              "
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path
-            d="M11 20C15.9706 20 20 15.9706 20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20Z"
-            stroke="#14142B"
-          />
-          <path d="M22 21.9999L18.7823 18.7822" stroke="#14142B" />
-        </svg>
+        <SearchBarIcon />
 
         <input
           type="text"
@@ -100,27 +82,7 @@ export default function SearchBar({
           }}
           aria-label="Close search"
         >
-          <svg
-            className="close_icon_svg lg:h-[50px] lg:w-[50px]     cursor-pointer "
-            width="35"
-            height="35"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path
-              d="M6 6L18.7742 18.7742"
-              stroke="#333333"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M6 18.7744L18.7742 6.00022"
-              stroke="#333333"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <CloseSearchIcon />
         </button>
       </div>
 
@@ -131,31 +93,10 @@ export default function SearchBar({
           onClick={() => {
             if (isSearchOpen) setIsSearchOpen(false);
             if (closeSearch) closeSearch();
-            // if (closeMenu) closeMenu();
           }}
           aria-label="Close search"
         >
-          <svg
-            className="close_icon_svg lg:h-[50px] lg:w-[50px]     cursor-pointer "
-            width="35"
-            height="35"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path
-              d="M6 6L18.7742 18.7742"
-              stroke="#333333"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M6 18.7744L18.7742 6.00022"
-              stroke="#333333"
-              stroke-linejoin="round"
-            />
-          </svg>
+          <CloseSearchIcon />
         </button>
       </div>
 
@@ -177,30 +118,10 @@ export default function SearchBar({
               >
                 <span className="">{item}</span>
 
-                <svg
+                <RemoveRecentSearchIcon
                   onClick={() => removeRecentSearch(idx)}
-                  aria-label={`Remove ${item} from recent searches`}
-                  role="button"
-                  className="ml-2 w-4 h-4 cursor-pointer"
-                  viewBox="0 0 17 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g opacity="0.5">
-                    <path
-                      d="M4.01758 4.01752L12.571 12.5709"
-                      stroke="#14142B"
-                      strokeWidth="0.67"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M4.01758 12.571L12.571 4.01765"
-                      stroke="#14142B"
-                      strokeWidth="0.67"
-                      strokeLinejoin="round"
-                    />
-                  </g>
-                </svg>
+                  ariaLabel={`Remove ${item} from recent searches`}
+                />
               </div>
             ))}
           </div>

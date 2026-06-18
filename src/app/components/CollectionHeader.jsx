@@ -13,6 +13,7 @@ function CollectionHeader({ title, subtitle }) {
   }, []);
   return (
     <div
+      aria-live="polite"
       className={` pt-8 md:pt-12 lg:pt-16 pb-6 md:pb-8 lg:pb-10 text-center transition-all duration-700 ${
         headerVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
       }`}

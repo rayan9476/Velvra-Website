@@ -1,9 +1,13 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import useSlideAnimation from "../hooks/useSlideAnimation";
 import CartFooter from "./CartFooter";
 import CartHeader from "./CartHeader";
 import CartContent from "./CartContent";
+import { useCart } from "@/app/components/contexts/CartContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart, updateCartItem } from "../lib/services";
+import { setError, setItems, setLoading } from "../redux/features/CartSlice";
 
 const initialItems = [
   {
@@ -26,21 +30,34 @@ const initialItems = [
   },
 ];
 
-export default function Cart({ isCartOpen, setIsCartOpen }) {
-  const [items, setItems] = useState(initialItems);
+// export default function Cart({ isCartOpen, setIsCartOpen }) {
+export default function Cart() {
+  const { isCartOpen, setIsCartOpen } = useCart();
 
-  const updateQty = (id, delta) => {
-    setItems((prev) =>
-      prev
-        .map((item) =>
-          item.id === id ? { ...item, qty: item.qty + delta } : item,
-        )
-        .filter((item) => item.qty > 0),
+  const dispatch = useDispatch();
+
+  const { items, isLoading, error } = useSelector((state) => state.cart);
+
+  // const [items, setItems] = useState(initialItems);
+
+  const updateQty = async (id, delta) => {
+    const data = await updateCartItem(id, delta);
+
+    console.log("kkkk", data);
+
+    dispatch(
+      setItems(
+        items
+          .map((item) =>
+            item.id === id ? { ...item, qty: item.qty + delta } : item,
+          )
+          .filter((item) => item.qty > 0),
+      ),
     );
   };
 
   const removeItem = (id) =>
-    setItems((prev) => prev.filter((i) => i.id !== id));
+    dispatch(setItems(items.filter((i) => i.id !== id)));
 
   const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
   const isEmpty = items.length === 0;
@@ -50,12 +67,50 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
   useSlideAnimation(isCartOpen, cartRef, "left");
   // Custom hook to handle slide animation ends here
 
+  useEffect(() => {
+    const load = async () => {
+      try {
+        dispatch(setLoading());
+        const data = await fetchCart();
+
+        const mapped = data.cartItems.map((o) => ({
+          id: o.id,
+          brand: "VELVRA",
+          name: o.name,
+          price: o.price,
+          qty: o.quantity,
+          image: o.image,
+        }));
+
+        dispatch(setItems(mapped));
+
+        sethellow(data);
+      } catch (err) {
+        dispatch(setError("Error loading orders:", err));
+      }
+    };
+
+    load();
+  }, []);
+
+  // useEffect(() => {
+  //   console.log("data", hellow);
+  // }, [hellow]);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
     <div
       ref={cartRef}
-      className="fixed w-full h-full z-20 flex  overflow-hidden transform -translate-x-[100%] "
+      role="dialog"
+      aria-modal="true"
+      aria-label="Shopping cart"
+      className={`fixed inset-0 w-full h-full z-20 flex  overflow-hidden transform -translate-x-[100%] 
+         ${isCartOpen ? "pointer-events-auto " : "pointer-events-none "}
+       `}
     >
-      <div
+      <aside
         className="relative flex flex-col bg-white
           w-full   
           h-full shadow-2xl font-[Tenor_Sans] font-normal"
@@ -74,7 +129,7 @@ export default function Cart({ isCartOpen, setIsCartOpen }) {
           subtotal={subtotal}
           setIsCartOpen={setIsCartOpen}
         />
-      </div>
+      </aside>
     </div>
   );
 }

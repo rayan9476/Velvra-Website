@@ -1,9 +1,26 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-export default function ProductCards({ image, name, price, className }) {
+export default function ProductCards({
+  image,
+  name,
+  price,
+  id,
+  className,
+  infoget = true,
+}) {
   const [isWished, setIsWished] = useState(false);
+  const router = useRouter();
+
+  const handleProductsbyname = (id) => {
+    const params = new URLSearchParams({
+      id,
+    });
+
+    router.push(`/products/${params}`);
+  };
 
   return (
     <>
@@ -11,6 +28,7 @@ export default function ProductCards({ image, name, price, className }) {
         className={`group relative flex flex-col ${className} cursor-pointer`}
         role="button"
         aria-label={`View product ${name}`}
+        onClick={() => router.push(`/products/${id}`)}
       >
         <div
           className="relative overflow-hidden bg-[#F5F3F0] aspect-[3/4]"
@@ -88,26 +106,28 @@ export default function ProductCards({ image, name, price, className }) {
           </div>
         </div>
 
-        <div className="pt-3 md:pt-4 flex flex-col gap-1">
-          <p
-            className="font-[Tenor_Sans] font-normal
+        {infoget && (
+          <div className="pt-3 md:pt-4 flex flex-col gap-1">
+            <p
+              className="font-[Tenor_Sans] font-normal
             text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[22px] 3xl:text-[24px]
             text-[#333333] leading-snug
             group-hover:text-[#DD8560] transition-colors duration-300
             line-clamp-2"
-            aria-label={`Product name: ${name}`}
-          >
-            {name}
-          </p>
-          <p
-            className="font-[Tenor_Sans] font-normal
+              aria-label={`Product name: ${name}`}
+            >
+              {name}
+            </p>
+            <p
+              className="font-[Tenor_Sans] font-normal
             text-[14px] md:text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[22px] 3xl:text-[24px]
             text-[#DD8560]"
-            aria-label={`Price: ${price} dollars`}
-          >
-            ${price}
-          </p>
-        </div>
+              aria-label={`Price: ${price} dollars`}
+            >
+              ${price}
+            </p>
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,8 +1,9 @@
 import { gsap } from "gsap";
+import { useEffect } from "react";
 
 export default function useMenuAnimation(ref) {
   const openMenu = () => {
-     if (typeof window === "undefined") return;
+    if (typeof window === "undefined") return;
     if (window.innerWidth < 1024) return;
     if (!ref.current) return; // safety check to ensure ref is attached
 
@@ -15,7 +16,7 @@ export default function useMenuAnimation(ref) {
     });
   };
   const closeMenu = (onDone) => {
-     if (typeof window === "undefined") return;
+    if (typeof window === "undefined") return;
     if (window.innerWidth < 1024) return;
     if (!ref.current) return; // safety check to ensure ref is attached
 

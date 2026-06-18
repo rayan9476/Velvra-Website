@@ -104,15 +104,15 @@ function JustForYou() {
               clickable: true,
               renderBullet: (index, className) => {
                 return `
-              <span class="${className}">
-                <span class="dot-inactive">
+              <span className="${className}">
+                <span className="dot-inactive">
                   <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
                     <rect x="4" y="0.353553" width="5.15685" height="5.15685"
                       transform="rotate(45 4 0.353553)"
-                      stroke="#888888" stroke-width="0.5"/>
+                      stroke="#888888" strokeWidth="0.5"/>
                   </svg>
                 </span>
-                <span class="dot-active">
+                <span className="dot-active">
                   <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
                     <rect x="4" width="5.65685" height="5.65685"
                       transform="rotate(45 4 0)" fill="#888888"/>

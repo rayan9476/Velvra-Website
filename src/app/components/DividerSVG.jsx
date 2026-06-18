@@ -1,4 +1,7 @@
-export default function DividerSVG({ className = "w-[10rem]" }) {
+export default function DividerSVG({
+  className = "w-[10rem]",
+  fill = "#555555",
+}) {
   return (
     <div className={className}>
       <svg
@@ -10,7 +13,7 @@ export default function DividerSVG({ className = "w-[10rem]" }) {
       >
         <path
           d="M62.5569 9.25429L67.1065 4.70469H124.959V4.4979H67.1065L62.5569 0L58.0591 4.4979H0V4.70469H58.0591L62.5569 9.25429ZM62.5569 0.3102L66.8997 4.60129L62.5569 8.94409L58.2142 4.60129L62.5569 0.3102Z"
-          fill="#555555"
+          fill={fill}
         />
       </svg>
     </div>

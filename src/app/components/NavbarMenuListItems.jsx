@@ -3,6 +3,10 @@ import menuData from "../data/NavbarMenuData";
 import useClickOutside from "../hooks/useClickOutside";
 import useMenuAnimation from "../hooks/useMenuAnimation";
 import useDropdownAnimation from "../hooks/useDropdownAnimation";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setPage } from "../redux/features/ProductsSlice";
 
 function NavbarMenuListItems() {
   const [isActiveItem, setisActiveItem] = useState("");
@@ -35,6 +39,34 @@ function NavbarMenuListItems() {
     });
   });
   // Custom hook to handle outside click logic ends here
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page");
+
+  const dispatch = useDispatch();
+
+  const handleMenuItemClick = (gender, category, item) => {
+    // const params = new URLSearchParams({
+    //   gender: gender,
+    //   category: category,
+    //   subcategory: item,
+    // });
+    // router.push(`/products?${params.toString()}`);
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("gender", gender);
+    params.set("category", category);
+    params.set("subcategory", item);
+    console.log("new urlkkk", page);
+
+    params.delete("page");
+    dispatch(setPage(1));
+
+    console.log("new url", params.toString());
+
+    router.push(`/products?${params.toString()}`);
+  };
 
   return (
     <>
@@ -132,7 +164,16 @@ function NavbarMenuListItems() {
           font-normal text-black hover:text-gray-500 transition
           lg:hover:bg-gray-100 lg:px-[0.6rem] lg:rounded"
               >
-                <span>{menu.title}</span>
+                <span
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push(
+                      `/products?gender=${isActiveItem}&category=${menu.title}`,
+                    );
+                  }}
+                >
+                  {menu.title}
+                </span>
                 <svg
                   className={`transition-transform duration-300 ${openItem === menu.title ? "rotate-180" : ""}`}
                   width="24"
@@ -159,6 +200,9 @@ function NavbarMenuListItems() {
                 {menu.items.map((item, i) => (
                   <div
                     key={i}
+                    onClick={() =>
+                      handleMenuItemClick(isActiveItem, menu.title, item)
+                    }
                     role="menuitem"
                     aria-label={item}
                     className="flex items-center justify-between pl-8 pr-5 h-[44px]

@@ -15,6 +15,7 @@ export async function GET() {
       );
     }
     const decoded = result;
+    console.log("decoded.id", decoded.id);
 
     // Get cart items with product details
     const [cartItems] = await db.query(
@@ -159,7 +160,7 @@ export async function DELETE(request) {
     const userId = result.id;
 
     const { productId } = await request.json();
-
+    console.log("productId", productId);
     if (!productId) {
       return NextResponse.json(
         { message: "ProductId required" },

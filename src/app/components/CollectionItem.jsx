@@ -1,16 +1,22 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import Image from "next/image";
+import { OctoberSvg } from "./icons/CollectionItemIcon";
+import { useDispatch, useSelector } from "react-redux";
+import { setVisible } from "../redux/features/CollectionItemSlice";
 
 function CollectionItem({ item, index }) {
-  const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
+
+  const { visible } = useSelector((state) => state.collectionItem);
+
   const ref = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
+        if (entry.isIntersecting) dispatch(setVisible(true));
       },
       { threshold: 0.15 },
     );
@@ -20,10 +26,19 @@ function CollectionItem({ item, index }) {
 
   return (
     <div
+      key={index}
       ref={ref}
       className={`transition-all duration-700 ease-out  ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
+      role="button"
+      tabIndex={0}
+      onClick={() => handleSelect(item)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          handleSelect(item);
+        }
+      }}
       style={{ transitionDelay: `2ms` }}
     >
       <div className="group cursor-pointer overflow-hidden">
@@ -45,7 +60,7 @@ function CollectionItem({ item, index }) {
               className="absolute    bottom-2.5 md:bottom-[-20px] right-[-40px] font-[Tenor_Sans] font-normal text-[#343434] select-none pointer-events-none leading-none"
               style={{ fontSize: "clamp(100px, 22vw, 220px)" }}
             >
-              {item.accentNumber}
+              {item.accentNumber === "10" && <OctoberSvg />}
             </div>
           )}
         </div>

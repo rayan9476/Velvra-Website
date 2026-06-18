@@ -1,8 +1,15 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import menuData from "../data/NavbarMenuData";
 import NavbarMenuFooter from "./NavbarMenuFooter";
 import useMenuSlideAnimation from "../hooks/useMenuSlideAnimation";
+import {
+  NavbarMenuCloseIcon,
+  DiamondIcon,
+  ChevronDownIcon,
+} from "./icons/NavbarMenuIcons";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 function NavbarMenu({ isMenuOpen, setIsMenuOpen }) {
   const [isActiveItem, setisActiveItem] = useState("Women");
@@ -17,6 +24,25 @@ function NavbarMenu({ isMenuOpen, setIsMenuOpen }) {
   // Custom hook to handle slide animation start here
   useMenuSlideAnimation(isMenuOpen, menuRef, "left");
   // Custom hook to handle slide animation ends here
+  const searchParams = useSearchParams();
+
+  const router = useRouter();
+
+  const handleMenuItemClick = (gender, category, item) => {
+    // const params = new URLSearchParams({
+    //   gender: gender,
+    //   category: category,
+    //   subcategory: item,
+    // });
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    params.set("gender", gender);
+    params.set("category", category);
+    params.set("subcategory", item);
+
+    router.push(`/products?${params.toString()}`);
+  };
 
   return (
     <>
@@ -25,7 +51,7 @@ function NavbarMenu({ isMenuOpen, setIsMenuOpen }) {
         role="dialog"
         aria-modal="true"
         aria-label="Main menu"
-        className="navbar_menu h-screen  overflow-hidden transfrom translate-x-[-100%]   z-20 w-full bg-[#FFFFFF] fixed top-0 left-0"
+        className="navbar_menu h-screen  fixed inset-0 z-20 overflow-x-hidden overflow-y-auto transform translate-x-[-100%]    w-full bg-[#FFFFFF]  top-0 left-0"
       >
         <div className="close_icon relative top-[0.8rem]    left-[0.2rem]  md:left-[0.6rem] lg:top-[1.1rem]">
           <button
@@ -34,25 +60,7 @@ function NavbarMenu({ isMenuOpen, setIsMenuOpen }) {
             aria-label="Close menu"
             className="cursor-pointer "
           >
-            <svg
-              className="close_icon_svg lg:h-[50px] lg:w-[50px]     cursor-pointer "
-              width="35"
-              height="35"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6 6L18.7742 18.7742"
-                stroke="#333333"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M6 18.7744L18.7742 6.00022"
-                stroke="#333333"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <NavbarMenuCloseIcon />
           </button>
         </div>
 
@@ -83,22 +91,8 @@ function NavbarMenu({ isMenuOpen, setIsMenuOpen }) {
                     }`}
                   >
                     <div className="line h-[1px] w-[30px] bg-[#DD8560]" />
-                    <svg
-                      width="9"
-                      height="9"
-                      viewBox="0 0 9 9"
-                      fill="none"
-                      role="separator"
-                      aria-hidden="true"
-                    >
-                      <rect
-                        x="4.24265"
-                        width="6"
-                        height="6"
-                        transform="rotate(45 4.24265 0)"
-                        fill="#DD8560"
-                      />
-                    </svg>
+
+                    <DiamondIcon />
                     <div className="line h-[1px] w-[30px] bg-[#DD8560]" />
                   </div>
                 </div>
@@ -109,63 +103,62 @@ function NavbarMenu({ isMenuOpen, setIsMenuOpen }) {
             <div className="h-[1px]    bg-[#888888] flex items-center justify-start"></div>
           </div>
 
-          <div className=" py-6 md:py-12 font-[Tenor_Sans]">
-            {currentMenu.map((menu) => (
-              <div key={menu.title} className="">
-                <div
-                  onClick={() => toggle(menu.title)}
-                  aria-label={`Toggle ${menu.title} menu`}
-                  role="button"
-                  tabIndex={0}
-                  aria-expanded={openItem === menu.title}
-                  className="flex items-center justify-between  h-[48.5px] md:h-[90px] cursor-pointer text-[16px] md:text-[18px] lg:text-[20px] font-normal text-black hover:text-gray-500 transition"
-                >
-                  <span>{menu.title}</span>
-
-                  <svg
-                    className={`transition-transform duration-300 ${
-                      openItem === menu.title ? "rotate-180" : ""
-                    }`}
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
+          <div className="checking flex flex-col h-full pb-22">
+            <div className=" py-6 md:py-12 font-[Tenor_Sans] flex-1 overflow-y-auto overflow-x-hidden  px-4 md:px-5 lg:px-6 3xl:px-7">
+              {currentMenu.map((menu) => (
+                <div key={menu.title} className="">
+                  <div
+                    onClick={() => toggle(menu.title)}
+                    aria-label={`Toggle ${menu.title} menu`}
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={openItem === menu.title}
+                    className="flex items-center justify-between  h-[48.5px] md:h-[90px] cursor-pointer text-[16px] md:text-[18px] lg:text-[20px] font-normal text-black hover:text-gray-500 transition"
                   >
-                    <path
-                      d="M19 9L12.0368 15.9632L5.07366 9"
-                      stroke="currentColor"
-                      strokeOpacity="0.5"
-                    />
-                  </svg>
-                </div>
-
-                <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openItem === menu.title
-                      ? "max-h-[400px] opacity-100"
-                      : "max-h-0 opacity-0"
-                  }`}
-                  role="region"
-                  aria-label={`${menu.title} submenu`}
-                >
-                  {menu.items.map((item, i) => (
-                    <div
-                      key={i}
-                      aria-label={item}
-                      role="menuitem"
-                      tabIndex={0}
-                      className="flex items-center justify-between pl-8 pr-5 h-[44px] text-[14px] lg:text-[18px] text-gray-500 hover:text-black  last:border-none cursor-pointer transition"
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(
+                          `/products?gender=${isActiveItem}&category=${menu.title}`,
+                        );
+                      }}
                     >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+                      {menu.title}
+                    </span>
 
-          <NavbarMenuFooter />
+                    <ChevronDownIcon isOpen={openItem === menu.title} />
+                  </div>
+
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${
+                      openItem === menu.title
+                        ? "max-h-[400px] opacity-100"
+                        : "max-h-0 opacity-0"
+                    }`}
+                    role="region"
+                    aria-label={`${menu.title} submenu`}
+                  >
+                    {menu.items.map((item, i) => (
+                      <div
+                        key={i}
+                        onClick={() =>
+                          handleMenuItemClick(isActiveItem, menu.title, item)
+                        }
+                        aria-label={item}
+                        role="menuitem"
+                        tabIndex={0}
+                        className="flex items-center justify-between pl-8 pr-5 h-[44px] text-[14px] lg:text-[18px] text-gray-500 hover:text-black  last:border-none cursor-pointer transition"
+                      >
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <NavbarMenuFooter />
+          </div>
         </div>
       </div>
     </>

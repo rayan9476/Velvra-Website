@@ -1,6 +1,20 @@
-function FilterChip({ label, onRemove }) {
+import { useDispatch } from "react-redux";
+import { setPage } from "../redux/features/ProductsSlice";
+
+function FilterChip({ label, onRemove, isTrue }) {
+  const dispatch = useDispatch();
+
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-label={`Selected filter: ${label}`}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          onRemove?.();
+          isTrue ? dispatch(setPage(1)) : "";
+        }
+      }}
       className="flex items-center gap-1.5 font-[Tenor_Sans] font-normal relative
                 whitespace-nowrap
                 px-4 md:px-5 lg:px-6 3xl:px-7
@@ -13,7 +27,13 @@ function FilterChip({ label, onRemove }) {
     >
       {label}
       <button
-        onClick={onRemove}
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onRemove?.();
+          isTrue ? dispatch(setPage(1)) : "";
+        }}
+        aria-label={`Remove ${label}`}
         className="text-[#888888] hover:text-[#DD8560] transition-colors cursor-pointer"
       >
         <svg
@@ -22,6 +42,7 @@ function FilterChip({ label, onRemove }) {
           height="10"
           viewBox="0 0 24 24"
           fill="none"
+          aria-hidden="true"
         >
           <path
             d="M6 6L18 18"
